@@ -1,4 +1,4 @@
-const API_KEY = 'YOUR_API_KEY_HERE';
+const API_KEY = '9b9614f520009c0233801aef7f6cde78';
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 const cityInput = document.getElementById('city-input');
@@ -12,6 +12,9 @@ const humidity = document.getElementById('humidity');
 const weatherContainer = document.getElementById('weather-container');
 const errorMessage = document.getElementById('error-message');
 const loading = document.getElementById('loading');
+const animeCharacter = document.getElementById('anime-character');
+const happyMessage = document.getElementById('happy-message');
+const feedbackForm = document.getElementById('feedback-form');
 
 searchBtn.addEventListener('click', searchWeather);
 cityInput.addEventListener('keyup', (event) => {
@@ -58,18 +61,43 @@ function displayWeather(data) {
     weatherContainer.style.display = 'block';
     weatherContainer.classList.add('animate__fadeIn');
     errorMessage.style.display = 'none';
+
+    displayAnimeCharacter(data.main.temp);
+}
+
+function displayAnimeCharacter(temp) {
+    let message = '';
+    let imageUrl = '';
+
+    if (temp > 25) {
+        message = "It's a beautiful sunny day!";
+        imageUrl = 'https://example.com/sunny-anime-character.png';
+    } else if (temp > 15) {
+        message = "Perfect weather for a walk!";
+        imageUrl = 'https://example.com/pleasant-anime-character.png';
+    } else {
+        message = "Don't forget your jacket!";
+        imageUrl = 'https://example.com/cold-anime-character.png';
+    }
+
+    animeCharacter.querySelector('img').src = imageUrl;
+    happyMessage.textContent = message;
+    animeCharacter.style.display = 'block';
+    animeCharacter.classList.add('animate__bounceIn');
 }
 
 function showError(message) {
     errorMessage.textContent = message;
     errorMessage.style.display = 'block';
     weatherContainer.style.display = 'none';
+    animeCharacter.style.display = 'none';
 }
 
 function showLoading() {
     loading.style.display = 'flex';
     weatherContainer.style.display = 'none';
     errorMessage.style.display = 'none';
+    animeCharacter.style.display = 'none';
 }
 
 function hideLoading() {
@@ -87,6 +115,18 @@ function loadLastCity() {
         searchWeather();
     }
 }
+
+feedbackForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    
+    // Here you would typically send this data to a server
+    console.log('Feedback submitted:', { name, email, message });
+    alert('Thank you for your feedback!');
+    feedbackForm.reset();
+});
 
 // Load last searched city on page load
 window.addEventListener('load', loadLastCity);

@@ -2,12 +2,73 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(to right, #00b4db, #0083b0);
+    margin-top: 1rem;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
     color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #23d5ab;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
 }
 
 .container {
@@ -18,9 +79,10 @@ body {
     text-align: center;
     max-width: 400px;
     width: 100%;
+    margin-bottom: 2rem;
 }
 
-h1 {
+h1, h2 {
     margin-bottom: 1rem;
 }
 
@@ -29,12 +91,13 @@ h1 {
     margin-bottom: 1rem;
 }
 
-input[type="text"] {
+input[type="text"], input[type="email"], textarea {
     flex-grow: 1;
     padding: 0.5rem;
     font-size: 1rem;
     border: none;
-    border-radius: 5px 0 0 5px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
 button {
@@ -43,7 +106,7 @@ button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -91,12 +154,39 @@ p {
     margin-top: 1rem;
 }
 
+#anime-character {
+    margin-top: 1rem;
+}
+
+#anime-character img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+#happy-message {
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
 @media (max-width: 480px) {
     .container {
         padding: 1rem;
     }
 
-    input[type="text"], button {
+    input[type="text"], input[type="email"], textarea, button {
         font-size: 0.9rem;
     }
 }
