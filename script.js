@@ -1,7 +1,7 @@
 const API_KEY = '9b9614f520009c0233801aef7f6cde78';
 const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 const NEWS_API_URL = 'https://newsapi.org/v2/everything';
-const NEWS_API_KEY = 'YOUR_NEWS_API_KEY';
+const NEWS_API_KEY = 'YOUR_NEWS_API_KEY'; // Replace with your actual News API key
 
 const cityInput = document.getElementById('city-input');
 const searchBtn = document.getElementById('search-btn');
@@ -14,8 +14,6 @@ const humidity = document.getElementById('humidity');
 const weatherContainer = document.getElementById('weather-container');
 const errorMessage = document.getElementById('error-message');
 const loading = document.getElementById('loading');
-const animeCharacter = document.getElementById('anime-character');
-const happyMessage = document.getElementById('happy-message');
 const weatherVideo = document.getElementById('weather-video');
 const currentWeatherVideo = document.getElementById('current-weather-video');
 const weatherNews = document.getElementById('weather-news');
@@ -40,32 +38,45 @@ async function searchWeather() {
             hideLoading();
         } catch (error) {
             hideLoading();
-            showError('City not found or an error occurred. Please try again.');
+            showError('Unable to fetch weather data. Please try again.');
+            console.error('Error:', error);
         }
     }
 }
 
 async function fetchWeather(city) {
-    const response = await axios.get(WEATHER_API_URL, {
-        params: {
-            q: city,
-            appid: API_KEY,
-            units: 'metric'
+    try {
+        const response = await axios.get(WEATHER_API_URL, {
+            params: {
+                q: city,
+                appid: API_KEY,
+                units: 'metric'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            throw new Error('City not found');
         }
-    });
-    return response.data;
+        throw error;
+    }
 }
 
 async function fetchNews(city) {
-    const response = await axios.get(NEWS_API_URL, {
-        params: {
-            q: `${city} weather`,
-            apiKey: NEWS_API_KEY,
-            language: 'en',
-            pageSize: 5
-        }
-    });
-    return response.data;
+    try {
+        const response = await axios.get(NEWS_API_URL, {
+            params: {
+                q: `${city} weather`,
+                apiKey: NEWS_API_KEY,
+                language: 'en',
+                pageSize: 5
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching news:', error);
+        return { articles: [] };
+    }
 }
 
 function displayWeather(data) {
@@ -78,32 +89,9 @@ function displayWeather(data) {
     humidity.textContent = `Humidity: ${data.main.humidity}%`;
 
     weatherContainer.style.display = 'block';
-    weatherContainer.classList.add('animate__fadeIn');
     errorMessage.style.display = 'none';
 
-    displayAnimeCharacter(data.main.temp);
     displayWeatherVideo(data.weather[0].main);
-}
-
-function displayAnimeCharacter(temp) {
-    let message = '';
-    let imageUrl = '';
-
-    if (temp > 25) {
-        message = "It's a beautiful sunny day! Don't forget your sunscreen!";
-        imageUrl = 'https://example.com/sunny-anime-character.png';
-    } else if (temp > 15) {
-        message = "Perfect weather for a walk! Enjoy the outdoors!";
-        imageUrl = 'https://example.com/pleasant-anime-character.png';
-    } else {
-        message = "It's a bit chilly! Don't forget your jacket!";
-        imageUrl = 'https://example.com/cold-anime-character.png';
-    }
-
-    animeCharacter.querySelector('img').src = imageUrl;
-    happyMessage.textContent = message;
-    animeCharacter.style.display = 'block';
-    animeCharacter.classList.add('animate__bounceIn');
 }
 
 function displayWeatherVideo(weatherCondition) {
@@ -113,7 +101,6 @@ function displayWeatherVideo(weatherCondition) {
 }
 
 function getWeatherVideoUrl(weatherCondition) {
-    // Replace these with actual weather video URLs
     const videos = {
         Clear: 'https://example.com/clear-weather.mp4',
         Clouds: 'https://example.com/cloudy-weather.mp4',
@@ -128,7 +115,6 @@ function displayNews(newsData) {
     newsData.articles.forEach(article => {
         const li = document.createElement('li');
         li.textContent = article.title;
-        li.classList.add('animate__animated', 'animate__fadeInLeft');
         newsList.appendChild(li);
     });
     weatherNews.style.display = 'block';
@@ -138,7 +124,6 @@ function showError(message) {
     errorMessage.textContent = message;
     errorMessage.style.display = 'block';
     weatherContainer.style.display = 'none';
-    animeCharacter.style.display = 'none';
     weatherVideo.style.display = 'none';
     weatherNews.style.display = 'none';
 }
@@ -147,7 +132,6 @@ function showLoading() {
     loading.style.display = 'flex';
     weatherContainer.style.display = 'none';
     errorMessage.style.display = 'none';
-    animeCharacter.style.display = 'none';
     weatherVideo.style.display = 'none';
     weatherNews.style.display = 'none';
 }
@@ -168,8 +152,5 @@ function loadLastCity() {
     }
 }
 
-// Load last searched city on page load
 window.addEventListener('load', loadLastCity);
-
-// Create a separate JavaScript file for the feedback form
 

@@ -3,58 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <title>Professional Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="background-animation"></div>
-    <header>
-        <h1 class="animate__animated animate__fadeIn">Weather App</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="animate__animated animate__fadeIn">Home</a></li>
-                <li><a href="feedback.html" class="animate__animated animate__fadeIn">Feedback</a></li>
-                <li><a href="contact.html" class="animate__animated animate__fadeIn">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="weather" class="container animate__animated animate__zoomIn">
-            <div class="search-container">
-                <input type="text" id="city-input" placeholder="Enter city name">
-                <button id="search-btn">Search</button>
-            </div>
-            <div id="loading" class="loading animate__animated animate__fadeIn" style="display: none;">
-                <div class="spinner"></div>
-            </div>
-            <div id="weather-container" class="animate__animated animate__fadeIn" style="display: none;">
-                <h2 id="city-name"></h2>
-                <div class="weather-icon">
-                    <img id="weather-icon" src="/placeholder.svg" alt="Weather Icon">
+    <div class="app-container">
+        <header>
+            <h1>Professional Weather App</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="search-section">
+                <div class="search-container">
+                    <input type="text" id="city-input" placeholder="Enter city name">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
                 </div>
-                <p id="temperature"></p>
-                <p id="description"></p>
-                <p id="wind-speed"></p>
-                <p id="humidity"></p>
-                <div id="anime-character" class="animate__animated animate__bounceIn" style="display: none;">
-                    <img src="/placeholder.svg" alt="Anime Character">
-                    <p id="happy-message"></p>
+            </section>
+            <section id="weather-section">
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
                 </div>
-                <div id="weather-video" class="animate__animated animate__fadeIn" style="display: none;">
-                    <video id="current-weather-video" controls width="100%"></video>
+                <div id="weather-container">
+                    <h2 id="city-name"></h2>
+                    <div class="weather-info">
+                        <div class="weather-icon">
+                            <img id="weather-icon" src="/placeholder.svg" alt="Weather Icon">
+                        </div>
+                        <div class="weather-details">
+                            <p id="temperature"></p>
+                            <p id="description"></p>
+                            <p id="wind-speed"></p>
+                            <p id="humidity"></p>
+                        </div>
+                    </div>
+                    <div id="weather-video">
+                        <video id="current-weather-video" controls width="100%"></video>
+                    </div>
                 </div>
-                <div id="weather-news" class="animate__animated animate__fadeIn" style="display: none;">
+                <div id="error-message"></div>
+            </section>
+            <section id="news-section">
+                <div id="weather-news">
                     <h3>Weather News</h3>
                     <ul id="news-list"></ul>
                 </div>
-            </div>
-            <div id="error-message" class="animate__animated animate__shakeX" style="display: none;"></div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Weather App. All rights reserved.</p>
-    </footer>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2023 Professional Weather App. All rights reserved.</p>
+        </footer>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </body>
