@@ -49,11 +49,26 @@ async function fetchWeather(city) {
 }
 
 async function fetchNews(city) {
-    const response = await fetch(`${NEWS_API_URL}?q=${city} weather&apiKey=${NEWS_API_KEY}&language=en&pageSize=5`);
-    if (!response.ok) {
-        throw new Error('Unable to fetch news');
+    try {
+        const response = await fetch(`${NEWS_API_URL}?q=${city}&apiKey=${NEWS_API_KEY}&language=en&pageSize=5`);
+        if (!response.ok) {
+            throw new Error('Unable to fetch news');
+        }
+        const data = await response.json();
+        
+        // Debug: Log the response to see its structure
+        console.log('News API Response:', data);
+        
+        // Check if there are articles
+        if (data.articles && data.articles.length > 0) {
+            return data;
+        } else {
+            throw new Error('No news articles found for this city.');
+        }
+    } catch (error) {
+        console.error('Error fetching news:', error);
+        throw error;
     }
-    return response.json();
 }
 
 function displayWeather(data) {
@@ -72,16 +87,23 @@ function displayWeather(data) {
 
 function displayNews(data) {
     newsList.innerHTML = '';
-    data.articles.forEach(article => {
+    if (data.articles.length > 0) {
+        data.articles.forEach(article => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = article.url;
+            a.target = '_blank';
+            a.textContent = article.title;
+            li.appendChild(a);
+            newsList.appendChild(li);
+        });
+        newsContainer.classList.remove('hidden');
+    } else {
         const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = article.url;
-        a.target = '_blank';
-        a.textContent = article.title;
-        li.appendChild(a);
+        li.textContent = 'No news found for this city.';
         newsList.appendChild(li);
-    });
-    newsContainer.classList.remove('hidden');
+        newsContainer.classList.remove('hidden');
+    }
 }
 
 function showError(message) {
