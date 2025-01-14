@@ -10,17 +10,17 @@
 <body>
     <div class="background-animation"></div>
     <header>
-        <h1>Weather App</h1>
+        <h1 class="animate__animated animate__fadeIn">Weather App</h1>
         <nav>
             <ul>
-                <li><a href="#weather">Weather</a></li>
-                <li><a href="#feedback">Feedback</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.html" class="animate__animated animate__fadeIn">Home</a></li>
+                <li><a href="feedback.html" class="animate__animated animate__fadeIn">Feedback</a></li>
+                <li><a href="contact.html" class="animate__animated animate__fadeIn">Contact</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section id="weather" class="container">
+        <section id="weather" class="container animate__animated animate__zoomIn">
             <div class="search-container">
                 <input type="text" id="city-input" placeholder="Enter city name">
                 <button id="search-btn">Search</button>
@@ -28,7 +28,7 @@
             <div id="loading" class="loading animate__animated animate__fadeIn" style="display: none;">
                 <div class="spinner"></div>
             </div>
-            <div id="weather-container" class="animate__animated" style="display: none;">
+            <div id="weather-container" class="animate__animated animate__fadeIn" style="display: none;">
                 <h2 id="city-name"></h2>
                 <div class="weather-icon">
                     <img id="weather-icon" src="/placeholder.svg" alt="Weather Icon">
@@ -41,26 +41,15 @@
                     <img src="/placeholder.svg" alt="Anime Character">
                     <p id="happy-message"></p>
                 </div>
+                <div id="weather-video" class="animate__animated animate__fadeIn" style="display: none;">
+                    <video id="current-weather-video" controls width="100%"></video>
+                </div>
+                <div id="weather-news" class="animate__animated animate__fadeIn" style="display: none;">
+                    <h3>Weather News</h3>
+                    <ul id="news-list"></ul>
+                </div>
             </div>
             <div id="error-message" class="animate__animated animate__shakeX" style="display: none;"></div>
-        </section>
-        <section id="feedback" class="container">
-            <h2>Feedback</h2>
-            <form id="feedback-form">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-                <button type="submit">Submit Feedback</button>
-            </form>
-        </section>
-        <section id="contact" class="container">
-            <h2>Contact Us</h2>
-            <p>Email: support@weatherapp.com</p>
-            <p>Phone: +1 (123) 456-7890</p>
-            <p>Address: 123 Weather Street, Sunny City, 12345</p>
         </section>
     </main>
     <footer>
